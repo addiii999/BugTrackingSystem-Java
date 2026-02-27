@@ -1,2 +1,5 @@
-*.class
+target/
+bin/
 .vscode/
+*.class
+*.log
