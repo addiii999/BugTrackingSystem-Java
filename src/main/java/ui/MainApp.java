@@ -37,16 +37,16 @@ public class MainApp extends Application {
 
     private BugService service = new BugService();
     private TableView<Bug> table = new TableView<>();
-    private User currentUser;  // 🔥 STEP 2: Store logged user
+    private User currentUser;  // STEP 2: Store logged user
 
     @Override
     public void start(Stage stage) {
         new LoginView().show(stage);
     }
 
-    public void showDashboard(Stage stage, User user) {  // 🔥 STEP 2: Accept user param
+    public void showDashboard(Stage stage, User user) {  // STEP 2: Accept user param
         
-        this.currentUser = user;  // 🔥 STEP 2: Store current user
+        this.currentUser = user;  // STEP 2: Store current user
         
         service.loadFromFile();
 
@@ -137,7 +137,7 @@ public class MainApp extends Application {
         addHoverEffect(assignBtn);
         addHoverEffect(updateStatusBtn);
 
-        // 🔥 STEP 4: Hide Admin Controls for Developer
+        // STEP 4: Hide Admin Controls for Developer
         if (user.getRole().equals("DEVELOPER")) {
             createBtn.setVisible(false);
             deleteBtn.setVisible(false);
@@ -180,7 +180,7 @@ public class MainApp extends Application {
             return row;
         });
 
-        // 🔥 Auto-fill form when row clicked (Pro UX)
+        // Auto-fill form when row clicked (Pro UX)
         table.setOnMouseClicked(e -> {
             Bug selected = table.getSelectionModel().getSelectedItem();
             if (selected != null) {
@@ -200,14 +200,14 @@ public class MainApp extends Application {
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         updateBarChart(barChart);
 
-        // 🔥 STEP 4: Hide charts for developers
+        // STEP 4: Hide charts for developers
         HBox charts = new HBox(20, pieChart, barChart);
         charts.setAlignment(Pos.CENTER);
         if (user.getRole().equals("DEVELOPER")) {
             charts.setVisible(false);
         }
 
-        refreshTable(currentUser);  // 🔥 STEP 3: Pass currentUser
+        refreshTable(currentUser);  // STEP 3: Pass currentUser
 
         // ===== Button Actions =====
         createBtn.setOnAction(e -> {
@@ -220,7 +220,7 @@ public class MainApp extends Application {
                 Bug bug = new Bug(id, t, d, p);
                 service.createBug(bug);
                 service.saveToFile();
-                refreshTable(currentUser);  // 🔥 STEP 3
+                refreshTable(currentUser);  // STEP 3
                 updatePieChart(pieChart);
                 updateBarChart(barChart);
 
@@ -234,7 +234,7 @@ public class MainApp extends Application {
             }
         });
 
-        // 🔥 Confirm Before Delete (Real-world UX)
+        // Confirm Before Delete (Real-world UX)
         deleteBtn.setOnAction(e -> {
             Bug selected = table.getSelectionModel().getSelectedItem();
 
@@ -253,14 +253,14 @@ public class MainApp extends Application {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 service.deleteBug(selected.id);
                 service.saveToFile();
-                refreshTable(currentUser);  // 🔥 STEP 3
+                refreshTable(currentUser);  // STEP 3
                 updatePieChart(pieChart);
                 updateBarChart(barChart);
             }
         });
 
         refreshBtn.setOnAction(e -> {
-            refreshTable(currentUser);  // 🔥 STEP 3
+            refreshTable(currentUser);  // STEP 3
             updatePieChart(pieChart);
             updateBarChart(barChart);
         });
@@ -269,7 +269,7 @@ public class MainApp extends Application {
             Bug selected = table.getSelectionModel().getSelectedItem();
             String newStatus = statusBox.getValue();
 
-            // 🔥 STEP 5: Restrict status change
+            // STEP 5: Restrict status change
             if (selected != null && newStatus != null) {
                 if (currentUser.getRole().equals("DEVELOPER")
                         && !currentUser.getUsername().equals(selected.assignedTo)) {
@@ -279,7 +279,7 @@ public class MainApp extends Application {
 
                 service.changeStatus(selected.id, newStatus);
                 service.saveToFile();
-                refreshTable(currentUser);  // 🔥 STEP 3
+                refreshTable(currentUser);  // STEP 3
                 updatePieChart(pieChart);
                 updateBarChart(barChart);
                 statusBox.getSelectionModel().clearSelection();
@@ -295,7 +295,7 @@ public class MainApp extends Application {
             if (selected != null && dev != null && !dev.isEmpty()) {
                 service.assignBug(selected.id, dev);
                 service.saveToFile();
-                refreshTable(currentUser);  // 🔥 STEP 3
+                refreshTable(currentUser);  // STEP 3
                 assignField.clear();
             } else {
                 showAlert("Select a bug and enter developer name");
@@ -306,7 +306,7 @@ public class MainApp extends Application {
             String input = searchField.getText();
 
             if (input == null || input.isEmpty()) {
-                refreshTable(currentUser);  // 🔥 STEP 3
+                refreshTable(currentUser);  // STEP 3
                 return;
             }
 
@@ -352,7 +352,7 @@ public class MainApp extends Application {
         stage.show();
     }
 
-    // 🔥 STEP 1: Updated refreshTable with user filtering
+    // STEP 1: Updated refreshTable with user filtering
     private void refreshTable(User user) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(150), table);
         fadeOut.setFromValue(1);
