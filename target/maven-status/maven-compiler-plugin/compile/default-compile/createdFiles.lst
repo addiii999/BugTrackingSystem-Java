@@ -1,0 +1,6 @@
+service\BugService.class
+service\AuthService.class
+ui\LoginView.class
+model\Bug.class
+model\User.class
+ui\MainApp.class

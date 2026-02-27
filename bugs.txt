@@ -1,0 +1,3 @@
+2,Signup Crash,App Crash,Medium,Open,Not Assigned
+1,Login,Login error,High,Closed,Not Assigned
+3,Loading,Loading error,Medium,In Progress,dev
